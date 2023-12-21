@@ -1,0 +1,53 @@
+{
+  "name": "backends-dbp-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "backends/dbp-backend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/backends/dbp-backend",
+        "main": "backends/dbp-backend/src/main.ts",
+        "tsConfig": "backends/dbp-backend/tsconfig.app.json",
+        "assets": ["backends/dbp-backend/src/assets"],
+        "webpackConfig": "backends/dbp-backend/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "backends-dbp-backend:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backends-dbp-backend:build:development"
+        },
+        "production": {
+          "buildTarget": "backends-dbp-backend:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "backends/dbp-backend/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
